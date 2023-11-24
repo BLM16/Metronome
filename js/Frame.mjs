@@ -1,6 +1,7 @@
-import { frames, pause, state } from "./main.mjs";
+import { clearActiveTick, frames, pause, setActiveFrame, setTickInterval, state } from './main.mjs';
+import { setTicks } from './Ticker.mjs';
 
-const c_frames = document.getElementById("frames");
+const c_frames = document.getElementById('frames');
 
 export class Frame {
     #tempo;
@@ -17,15 +18,16 @@ export class Frame {
         this.#duration_bars = undefined;
 
         // Create a new frame in the DOM
-        const elem = document.createElement("metronome-frame");
-        elem.setAttribute("data-frame-number", frame_number);
-        elem.setAttribute("tempo", this.#tempo || "");
-        elem.setAttribute("time_signature_num", this.#time_signature_num || "");
-        elem.setAttribute("time_signature_den", this.#time_signature_den || "");
-        elem.setAttribute("duration_bars", this.#duration_bars || "");
+        const elem = document.createElement('metronome-frame');
+        elem.setAttribute('data-frame-number', frame_number);
+        elem.setAttribute('onclick', `frameClicked(${frame_number})`);
+        elem.setAttribute('tempo', this.#tempo || '');
+        elem.setAttribute('time_signature_num', this.#time_signature_num || '');
+        elem.setAttribute('time_signature_den', this.#time_signature_den || '');
+        elem.setAttribute('duration_bars', this.#duration_bars || '');
 
         if (state.frame + 1 == frame_number)
-            elem.setAttribute("class", "active");
+            elem.setAttribute('class', 'active');
 
         c_frames.appendChild(elem);
     }
@@ -39,7 +41,7 @@ export class Frame {
         pause();
 
         const elem = c_frames.getElementsByTagName('metronome-frame')[this.frame_number - 1];
-        elem.setAttribute("tempo", this.#tempo);
+        elem.setAttribute('tempo', this.#tempo);
     }
 
     get time_signature_num() {
@@ -74,7 +76,7 @@ function getFrameFor(elem) {
     const shadowRoot = elem.getRootNode();
     const metronome_frame = shadowRoot.host;
 
-    const frame_number = metronome_frame.getAttribute("data-frame-number");
+    const frame_number = metronome_frame.getAttribute('data-frame-number');
     return frames[frame_number - 1];
 }
 
@@ -111,4 +113,17 @@ window.incTempo = function(elem) {
 window.decTempo = function(elem) {
     const frame = getFrameFor(elem);
     frame.tempo--;
+}
+
+window.frameClicked = function(frame_num) {
+    state.frame = frame_num - 1;
+    state.bar = 0;
+    state.beat = 0;
+
+    clearActiveTick();
+    setActiveFrame(state.frame);
+    setTicks(frames[state.frame].time_signature_num);
+    
+    if (state.play)
+        setTickInterval();
 }

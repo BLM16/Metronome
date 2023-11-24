@@ -1,11 +1,11 @@
 import { doTick, setTicks } from './Ticker.mjs';
 import { Frame } from './Frame.mjs';
 
-const btn_play = document.getElementById("btn-play");
+const btn_play = document.getElementById('btn-play');
 btn_play.addEventListener('click', togglePlay);
 window.addEventListener('keypress', (e) => {
     // Spacebar toggle play
-    if (e.key == " ") togglePlay();
+    if (e.key == ' ') togglePlay();
 });
 
 window.addEventListener('resize', fixFramesWidth);
@@ -22,7 +22,7 @@ export let frames = [ new Frame(1) ];
 
 window.onload = () => setTicks(frames[state.frame].time_signature_num);
 
-const c_frames = document.getElementById("frames");
+const c_frames = document.getElementById('frames');
 
 window.addFrame = function() {
     frames.push(new Frame(frames.length + 1));
@@ -30,7 +30,7 @@ window.addFrame = function() {
 }
 
 function fixFramesWidth() {
-    const mframes = document.querySelector("#frames");
+    const mframes = document.querySelector('#frames');
     if (mframes.clientWidth > window.innerWidth) {
         frames_wrapper.classList.add('small-screen');
         return;
@@ -50,14 +50,14 @@ export function togglePlay() {
 
 export function play() {
     state.play = true;
-    btn_play.innerText = "STOP";
+    btn_play.innerText = 'STOP';
     setTicks(frames[state.frame].time_signature_num);
     setTickInterval();
 }
 
 export function pause() {
     window.clearInterval(tick_interval_id);
-    btn_play.innerText = "START";
+    btn_play.innerText = 'START';
 
     // Reset state
     state.play = false;
@@ -69,8 +69,8 @@ export function pause() {
     setActiveFrame(0);
 }
 
-function clearActiveTick() {
-    let ticks = document.getElementById("ticker")
+export function clearActiveTick() {
+    let ticks = document.getElementById('ticker')
                     .getElementsByClassName('tick');
 
     for (let tick of ticks) {

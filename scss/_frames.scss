@@ -19,28 +19,41 @@
         border: $frame-border;
         border-radius: 20px;
         width: 12em;
-        height: min-content;
+        height: 10.35em;
         padding: 1em;
 
         &.active {
-            background-color: $frame-bg-active;
             border: $frame-border-active;
+        }
+
+        &:hover:not(.active) {
+            border: $frame-border-hover;
+            cursor: pointer;
         }
     }  
     
     .add-frame-wrapper {
         order: 1;
         width: 12em;
+        height: 10.35em;
+        align-self: stretch;
         text-align: center;
-        
+
         .add-frame {
             font-size: 4em;
             border: none;
             background-color: transparent;
             color: $control-color;
-
+            width: 100%;
+            height: 100%;
+            
+            border-radius: 20px;
+            border: $frame-border;
+            
             &:hover {
                 cursor: pointer;
+                color: $frame-control-bg-hover;
+                border: $frame-border-hover;
             }
         }
     }

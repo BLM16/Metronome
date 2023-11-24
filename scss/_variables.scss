@@ -5,11 +5,11 @@ $control-color: #fff;
 $control-bg-active: lighten($control-bg, 5%);
 
 $frame-bg: #936e50;
-$frame-bg-active: $frame-bg;
 $frame-border: 2px solid #fff;
 $frame-border-active: 3px solid #ffff00;
 $frame-control-bg: #fff;
-$frame-control-bg-hover: #eee;
+$frame-control-bg-hover: #aaa;
+$frame-border-hover: 2px solid $frame-control-bg-hover;
 $frame-control-border: 1px solid #000;
 
 $ticker-bg: #008080;

@@ -1,6 +1,6 @@
-import { frames, setActiveFrame, setTickInterval, state } from "./main.mjs";
+import { frames, setActiveFrame, setTickInterval, state } from './main.mjs';
 
-const c_ticks = document.getElementById("ticker");
+const c_ticks = document.getElementById('ticker');
 const tick_noise = new Audio('./assets/tick.mp3');
 
 let updateActive = false;
@@ -14,8 +14,8 @@ export function setTicks(qty) {
     }
 
     for (let i = 0; i < qty; i++) {
-        const tick = document.createElement("div");
-        tick.setAttribute("class", "tick");
+        const tick = document.createElement('div');
+        tick.setAttribute('class', 'tick');
 
         c_ticks.appendChild(tick);
     }
