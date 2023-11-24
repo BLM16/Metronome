@@ -1,0 +1,25 @@
+@import "_variables";
+
+#controls {
+    padding: 0 2em 2em;
+    display: flex;
+    flex-direction: column;
+    flex-flow: column;
+    flex-wrap: nowrap;
+    align-items: center;
+
+    #btn-play {
+        max-width: 95vw;
+        width: 31em;
+        height: 3em;
+        background-color: $control-bg;
+        border: none;
+        border-radius: 8px;
+        color: $control-color;
+
+        &:hover {
+            background-color: $control-bg-active;
+            cursor: pointer;
+        }
+    }
+}

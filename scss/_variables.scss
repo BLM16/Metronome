@@ -1,0 +1,18 @@
+$body-bg: #1c1e1d;
+
+$control-bg: #008080;
+$control-color: #fff;
+$control-bg-active: lighten($control-bg, 5%);
+
+$frame-bg: rgb(147, 110, 80);
+$frame-bg-active: $frame-bg;
+$frame-border: 2px solid #fff;
+$frame-border-active: 3px solid #ffff00;
+$frame-control-bg: #fff;
+$frame-control-bg-hover: #eee;
+$frame-control-border: 1px solid #000;
+
+$ticker-bg: #008080;
+$ticker-tick-color: #ffa500;
+$ticker-tick-color-active: #ffff00;
+$ticker-shadow: 0 0 7px #000 inset;

@@ -1,0 +1,47 @@
+@import "_variables";
+
+#frames {
+    padding: 2em;
+    display: flex;
+    flex-direction: row;
+    flex-flow: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 2em;
+    
+    &.small-screen {
+        justify-content: left;
+    }
+
+    metronome-frame {
+        background-color: $frame-bg;
+        border: $frame-border;
+        border-radius: 20px;
+        width: 12em;
+        height: min-content;
+        padding: 1em;
+
+        &.active {
+            background-color: $frame-bg-active;
+            border: $frame-border-active;
+        }
+    }  
+    
+    .add-frame-wrapper {
+        order: 1;
+        width: 12em;
+        text-align: center;
+        
+        .add-frame {
+            font-size: 4em;
+            border: none;
+            background-color: transparent;
+            color: $control-color;
+
+            &:hover {
+                cursor: pointer;
+            }
+        }
+    }
+}

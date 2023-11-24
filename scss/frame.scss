@@ -1,0 +1,77 @@
+@import "_variables";
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+:host > :not(:first-child) {
+    padding-top: 0.8em;
+}
+
+.tempo {
+    display: flex;
+    flex-direction: row;
+    flex-flow: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    align-items: center;
+
+    .txt-tempo {
+        font-size: 18pt;
+        width: 3em;
+        height: 1.6em;
+        border: $frame-control-border;
+        border-radius: 8px;
+        text-align: center;
+    }
+
+    .btn-tempo {
+        border: $frame-control-border;
+        background-color: $frame-control-bg;
+        border-radius: 50%;
+        width: 1.6em;
+        height: 1.6em;
+        font-size: 18pt;
+
+        &:hover {
+            background-color: $frame-control-bg-hover;
+            cursor: pointer;
+        }
+    }
+}
+
+.time-signature {
+    display: flex;
+    flex-direction: row;
+    flex-flow: row;
+    flex-wrap: nowrap;
+    justify-content: center;
+
+    .time-signature-input {
+        width: 2em;
+        height: 2em;
+        margin: 0 1em;
+        text-align: center;
+        border: $frame-control-border;
+        border-radius: 8px;
+    }
+}
+
+.duration {
+    display: flex;
+    flex-direction: row;
+    flex-flow: row;
+    flex-wrap: nowrap;
+    justify-content: center;
+
+    .duration-input {
+        width: 4em;
+        height: 3em;
+        margin: 0 1em;
+        text-align: center;
+        border: $frame-control-border;
+        border-radius: 8px;
+    }
+}
