@@ -21,7 +21,7 @@ class FrameElement extends HTMLElement {
             btn_tempo_down.innerText = '-';
 
             const txt_tempo = document.createElement('input');
-            txt_tempo.setAttribute('type', 'text');
+            txt_tempo.setAttribute('type', 'number');
             txt_tempo.setAttribute('name', 'tempo');
             txt_tempo.setAttribute('class', 'txt-tempo');
             txt_tempo.setAttribute('placeholder', '100');
@@ -42,7 +42,7 @@ class FrameElement extends HTMLElement {
         time_signature.setAttribute('class', 'time-signature');
 
             const time_signature_num = document.createElement('input');
-            time_signature_num.setAttribute('type', 'text');
+            time_signature_num.setAttribute('type', 'number');
             time_signature_num.setAttribute('name', 'time-signature-num');
             time_signature_num.setAttribute('class', 'time-signature-input');
             time_signature_num.setAttribute('placeholder', '4');
@@ -54,7 +54,7 @@ class FrameElement extends HTMLElement {
             time_signature_separator.innerText = ':';
             
             const time_signature_den = document.createElement('input');
-            time_signature_den.setAttribute('type', 'text');
+            time_signature_den.setAttribute('type', 'number');
             time_signature_den.setAttribute('name', 'time-signature-den');
             time_signature_den.setAttribute('class', 'time-signature-input');
             time_signature_den.setAttribute('placeholder', '4');
@@ -69,7 +69,7 @@ class FrameElement extends HTMLElement {
         duration.setAttribute('class', 'duration');
 
             const duration_bars = document.createElement('input');
-            duration_bars.setAttribute('type', 'text');
+            duration_bars.setAttribute('type', 'number');
             duration_bars.setAttribute('name', 'duration-bars');
             duration_bars.setAttribute('class', 'duration-input');
             duration_bars.setAttribute('placeholder', 'bars');

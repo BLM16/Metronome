@@ -1,7 +1,8 @@
 import { frames, setActiveFrame, setTickInterval, state } from './main.mjs';
+import * as audio from './Audio.mjs';
 
 const c_ticks = document.getElementById('ticker');
-const tick_noise = new Audio('./assets/tick.mp3');
+const chk_emph_first_tick = document.getElementById('chkEmphFirstTick');
 
 let updateActive = false;
 
@@ -37,7 +38,8 @@ export function doTick() {
     ticks[old_index].classList.remove('active');
     ticks[state.beat].classList.add('active');
 
-    tick_noise.play();
+    let emph_first = chk_emph_first_tick.checked;
+    audio.playTick(emph_first && state.beat == 0);
 
     state.beat++;
     if (state.beat > frames[state.frame].time_signature_num - 1) {

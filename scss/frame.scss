@@ -6,6 +6,13 @@
     padding: 0;
 }
 
+/* Disable arrows inside number inputs */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
 :host > :not(:first-child) {
     padding-top: 0.8em;
 }

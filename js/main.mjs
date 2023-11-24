@@ -1,11 +1,23 @@
 import { doTick, setTicks } from './Ticker.mjs';
 import { Frame } from './Frame.mjs';
+import { resumeAudioContext } from './Audio.mjs';
 
 const btn_play = document.getElementById('btn-play');
 btn_play.addEventListener('click', togglePlay);
-window.addEventListener('keypress', (e) => {
+window.addEventListener('keydown', (e) => {
     // Spacebar toggle play
-    if (e.key == ' ') togglePlay();
+    if (e.key == ' ') {
+        e.preventDefault();
+        e.stopImmediatePropagation();
+        togglePlay();
+    }
+});
+window.addEventListener('keyup', (e) => {
+    // Prevent keyup event from toggling any buttons
+    if (e.key == ' ') {
+        e.preventDefault();
+        e.stopImmediatePropagation();
+    }
 });
 
 window.addEventListener('resize', fixFramesWidth);
@@ -51,6 +63,7 @@ export function togglePlay() {
 export function play() {
     state.play = true;
     btn_play.innerText = 'STOP';
+    resumeAudioContext();
     setTicks(frames[state.frame].time_signature_num);
     setTickInterval();
 }
