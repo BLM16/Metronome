@@ -31,6 +31,8 @@ jobs:
         run: |
           mkdir dist dist/css dist/js dist/assets
           cp index.html ./dist/index.html
+          cp favicon.ico ./dist/favicon.ico
+          cp site.webmanifest ./dist/site.webmanifest
           cp -R ./css ./js ./assets ./dist
 
       - name: Create .nojekyll
