@@ -1,0 +1,45 @@
+name: GH Pages Deploy
+
+on:
+  push:
+    branches: [ master ]
+
+permissions:
+  contents: write
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Make dist folders
+        run: mkdir css
+
+      - name: Compile CSS from SCSS files
+        uses: gha-utilities/sass-build@v0.5.1
+        with:
+          source: |
+            ./scss/main.scss
+            ./scss/frame.scss
+          destination: |
+            ./css/main.css
+            ./css/frame.css
+
+      - name: Copy deployable files to ./dist
+        run: |
+          mkdir dist dist/css dist/js dist/assets
+          cp index.html ./dist/index.html
+          cp -R ./css ./js ./assets ./dist
+
+      - name: Create .nojekyll
+        run: touch dist/.nojekyll
+          
+      - name: Deploy to GitHub Pages
+        uses: crazy-max/ghaction-github-pages@v4
+        with:
+          target_branch: gh-pages
+          build_dir: ./dist
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
