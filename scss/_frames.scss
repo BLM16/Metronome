@@ -1,5 +1,23 @@
 @import "_variables";
 
+metronome-frame {
+    background-color: $frame-bg;
+    border: $frame-border;
+    border-radius: 20px;
+    width: 12em;
+    height: 10.35em;
+    padding: 1em;
+
+    &.active {
+        border: $frame-border-active;
+    }
+
+    &:hover:not(.active):not([disabled]) {
+        border: $frame-border-hover;
+        cursor: pointer;
+    }
+}
+
 #frames {
     padding: 2em;
     display: flex;
@@ -13,24 +31,6 @@
     &.small-screen {
         justify-content: left;
     }
-
-    metronome-frame {
-        background-color: $frame-bg;
-        border: $frame-border;
-        border-radius: 20px;
-        width: 12em;
-        height: 10.35em;
-        padding: 1em;
-
-        &.active {
-            border: $frame-border-active;
-        }
-
-        &:hover:not(.active) {
-            border: $frame-border-hover;
-            cursor: pointer;
-        }
-    }  
     
     .add-frame-wrapper {
         order: 1;

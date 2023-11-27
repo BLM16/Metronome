@@ -18,23 +18,52 @@
     <link rel="stylesheet" type="text/css" href="css/main.css">
 </head>
 <body>
-    <div id="ticker"></div>
-    <div id="frames">
-        <div class="add-frame-wrapper">
-            <button type="button" class="add-frame" onclick="addFrame()">
-                &plus;
+    <main>
+        <div id="ticker"></div>
+        <div id="frames">
+            <div class="add-frame-wrapper">
+                <button type="button" class="add-frame" onclick="addFrame()">
+                    &plus;
+                </div>
             </div>
         </div>
+        <div id="controls">
+            <button type="button" class="btn" id="btn-play">START</button>
+            <label for="chkEmphFirstTick" class="toggle-btn btn">
+                <input type="checkbox" id="chkEmphFirstTick" checked>
+                <span class="check"></span>
+                Emphasize 1st
+            </label>
+        </div>
+    </main>
+
+    <div type="button" id="btn-info" class="btn">
+        <img src="assets/help_icon.svg" alt="help icon" class="icon">
     </div>
-    <div id="controls">
-        <button type="button" id="btn-play">START</button>
-        <label for="chkEmphFirstTick" class="toggle-btn">
-            <input type="checkbox" id="chkEmphFirstTick" checked>
-            <span class="check"></span>
-            Emphasize 1st
-        </label>
-    </div>
+
+    <dialog id="info-modal" class="modal">
+        <div class="container">
+            <button type="button" id="btn-info-close-top" class="hidden" autofocus></button>
+            Each frame has its own tempo, time signature, and bar count. After a frame has finished playing, the next one will immediately proceed with beat one of the next frame starting when the previous frame's next beat would occur. To start from a specific frame, simply click on the frame and it will become selected.
+            <metronome-frame disabled></metronome-frame>
+            <details open>
+                <summary>Tempo</summary>
+                The tempo is set in beats per minute (BPM). It can be entered manually in the textbox, however the - and + buttons will also make quick small adjustments to the tempo.
+            </details>
+            <details open>
+                <summary>Time Signature</summary>
+                The two boxes in the middle of the frame represent the time signature. The time signature always assumes times relative to a quarter note. The metronome will not use dotted quarter notes or any other note to keep time.
+            </details>
+            <details open>
+                <summary>Number of Bars</summary>
+                If the bottom entry for the number of bars is empty, the frame will loop infinitely. If there is a number in this box, that is the number of bars that will be played in the frame before it proceeds to the next frame.
+            </details>
+            <button type="button" id="btn-info-close" class="btn">Close</button>
+        </div>
+    </dialog>
+
     <script type="module" src="js/FrameElement.js"></script>
     <script type="module" src="js/main.mjs"></script>
+    <script type="application/javascript" src="js/modal.js"></script>
 </body>
 </html>

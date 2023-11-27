@@ -80,7 +80,15 @@ function getFrameFor(elem) {
     return frames[frame_number - 1];
 }
 
+function isDisabled(elem) {
+    const shadowRoot = elem.getRootNode();
+    const metronome_frame = shadowRoot.host;
+    return metronome_frame.hasAttribute('disabled');
+}
+
 window.setFrameValue = function(elem, target) {
+    if (isDisabled(elem)) return;
+
     const frame = getFrameFor(elem);
 
     switch (target) {
@@ -106,11 +114,15 @@ window.setFrameValue = function(elem, target) {
 }
 
 window.incTempo = function(elem) {
+    if (isDisabled(elem)) return;
+
     const frame = getFrameFor(elem);
     frame.tempo++;
 }
 
 window.decTempo = function(elem) {
+    if (isDisabled(elem)) return;
+
     const frame = getFrameFor(elem);
     frame.tempo--;
 }

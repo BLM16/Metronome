@@ -13,10 +13,6 @@
         max-width: 95vw;
         width: 31em;
         height: 3em;
-        background-color: $control-bg;
-        border: none;
-        border-radius: 8px;
-        color: $control-color;
 
         &:hover {
             background-color: $control-bg-active;
@@ -27,14 +23,9 @@
     .toggle-btn {
         position: relative;
         height: 2.5em;
-        background-color: $control-bg;
-        border: none;
-        border-radius: 8px;
-        color: $control-color;
         display: flex;
         flex-direction: row;
         align-items: center;
-        padding: 0.5em;
         gap: 0.5em;
 
         input[type=checkbox] {
@@ -57,7 +48,7 @@
             width: 25px;
             background-color: $frame-control-bg;
             border-radius: 3px;
-            box-shadow: 0 0 3px #000 inset;
+            box-shadow: $control-checkbox-shadow;
 
             &::after {
                 content: "";

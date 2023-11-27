@@ -1,4 +1,4 @@
-import { frames, setActiveFrame, setTickInterval, state } from './main.mjs';
+import { frames, pause, setActiveFrame, setTickInterval, state } from './main.mjs';
 import * as audio from './Audio.mjs';
 
 const c_ticks = document.getElementById('ticker');
@@ -24,6 +24,12 @@ export function setTicks(qty) {
 
 export function doTick() {
     if (updateActive) {
+        // The last frame has played
+        if (state.frame == frames.length) {
+            pause();
+            return;
+        }
+
         setActiveFrame(state.frame);
         setTicks(frames[state.frame].time_signature_num);
         setTickInterval();

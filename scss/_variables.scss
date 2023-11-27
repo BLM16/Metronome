@@ -1,8 +1,10 @@
 $body-bg: #1c1e1d;
+$scrollbar-color: #ccc;
 
 $control-bg: #008080;
 $control-color: #fff;
 $control-bg-active: lighten($control-bg, 5%);
+$control-checkbox-shadow: 0 0 3px #000 inset;
 
 $frame-bg: #936e50;
 $frame-border: 2px solid #fff;
