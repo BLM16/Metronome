@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="title" content="Metronome">
+    <meta name="description" content="A metronome that can change tempo or time signature multiple times for more complicated music.">
+    <meta name="keywords" content="metronome, tempo, time signature">
+    <meta name="robots" content="index, follow">
+    <meta name="author" content="Bradley Myers">
+    <title>Metronome</title>
+
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/icon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/icon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/icon/favicon-16x16.png">
+    <link rel="manifest" href="site.webmanifest">
+
+    <link rel="stylesheet" type="text/css" href="css/main.css">
+</head>
+<body>
+    <main>
+        <div id="ticker"></div>
+        <div id="frames">
+            <div class="add-frame-wrapper">
+                <button type="button" class="add-frame" onclick="addFrame()">
+                    &plus;
+                </div>
+            </div>
+        </div>
+        <div id="controls">
+            <button type="button" class="btn" id="btn-play">START</button>
+            <div class="row">
+                <label for="chkEmphFirstTick" class="toggle-btn btn">
+                    <input type="checkbox" id="chkEmphFirstTick" checked>
+                    <span class="check"></span>
+                    Emphasize 1st
+                </label>
+                <button type="button" class="btn" id="btn-export">
+                    <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M64 32C28.7 32 0 60.7 0 96V416c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V173.3c0-17-6.7-33.3-18.7-45.3L352 50.7C340 38.7 323.7 32 306.7 32H64zm0 96c0-17.7 14.3-32 32-32H288c17.7 0 32 14.3 32 32v64c0 17.7-14.3 32-32 32H96c-17.7 0-32-14.3-32-32V128zM224 288a64 64 0 1 1 0 128 64 64 0 1 1 0-128z"/></svg>
+                    Save
+                </button>
+                <button type="button" class="btn" id="btn-load">
+                    <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M288 32c0-17.7-14.3-32-32-32s-32 14.3-32 32V274.7l-73.4-73.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l128 128c12.5 12.5 32.8 12.5 45.3 0l128-128c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L288 274.7V32zM64 352c-35.3 0-64 28.7-64 64v32c0 35.3 28.7 64 64 64H448c35.3 0 64-28.7 64-64V416c0-35.3-28.7-64-64-64H346.5l-45.3 45.3c-25 25-65.5 25-90.5 0L165.5 352H64zm368 56a24 24 0 1 1 0 48 24 24 0 1 1 0-48z"/></svg>
+                    Load
+                </button>
+                <button type="button" class="btn" id="btn-delete">
+                    <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M135.2 17.7L128 32H32C14.3 32 0 46.3 0 64S14.3 96 32 96H416c17.7 0 32-14.3 32-32s-14.3-32-32-32H320l-7.2-14.3C307.4 6.8 296.3 0 284.2 0H163.8c-12.1 0-23.2 6.8-28.6 17.7zM416 128H32L53.2 467c1.6 25.3 22.6 45 47.9 45H346.9c25.3 0 46.3-19.7 47.9-45L416 128z"/></svg>
+                    Delete
+                </button>
+            </div>
+        </div>
+    </main>
+
+    <div type="button" id="btn-info" class="btn">
+        <img src="assets/help_icon.svg" alt="help icon" class="icon">
+    </div>
+
+    <dialog id="save-config-modal" class="modal">
+        <div class="container">
+            Enter a name to identify the configuration when it is loaded later.
+            <form method="dialog">
+                <input type="text" name="config-name" id="txt-config-name" placeholder="Configuration name" autocomplete="off">
+                <button type="submit" id="btn-save-config" class="btn">Save</button>
+            </form>
+            <button type="button" id="btn-save-config-close" class="btn">Close</button>
+        </div>
+    </dialog>
+    <dialog id="load-config-modal" class="modal">
+        <div class="container">
+            Select the configuration you want to load.
+            <form method="dialog">
+                <select name="load-config-selector" id="load-config-selector" required></select>
+                <button type="submit" id="btn-load-config" class="btn">Load</button>
+            </form>
+            <button type="button" id="btn-load-config-close" class="btn">Close</button>
+        </div>
+    </dialog>
+    <dialog id="delete-config-modal" class="modal">
+        <div class="container">
+            Select the configuration you want to delete.
+            <form method="dialog">
+                <select name="delete-config-selector" id="delete-config-selector" required></select>
+                <button type="submit" id="btn-delete-config" class="btn">Delete</button>
+            </form>
+            <button type="button" id="btn-delete-config-close" class="btn">Close</button>
+        </div>
+    </dialog>
+
+    <dialog id="info-modal" class="modal">
+        <div class="container">
+            Each frame has its own tempo, time signature, and bar count. After a frame has finished playing, the next one will immediately proceed with beat one of the next frame starting when the previous frame's next beat would occur. To start from a specific frame, simply click on the frame and it will become selected.
+            <metronome-frame disabled></metronome-frame>
+            <details open>
+                <summary>Tempo</summary>
+                The tempo is set in beats per minute (BPM). It can be entered manually in the textbox, however the - and + buttons will also make quick small adjustments to the tempo.
+            </details>
+            <details open>
+                <summary>Time Signature</summary>
+                The two boxes in the middle of the frame represent the time signature. The time signature always assumes times relative to a quarter note. The metronome will not use dotted quarter notes or any other note to keep time.
+            </details>
+            <details open>
+                <summary>Number of Bars</summary>
+                If the bottom entry for the number of bars is empty, the frame will loop infinitely. If there is a number in this box, that is the number of bars that will be played in the frame before it proceeds to the next frame.
+            </details>
+            <button type="button" id="btn-info-close" class="btn">Close</button>
+        </div>
+    </dialog>
+
+    <script type="module" src="js/FrameElement.js"></script>
+    <script type="module" src="js/main.mjs"></script>
+    <script type="module" src="js/modal.mjs"></script>
+</body>
+</html>
