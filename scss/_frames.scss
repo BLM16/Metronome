@@ -7,6 +7,7 @@ metronome-frame {
     width: 12em;
     height: 10.35em;
     padding: 1em;
+    color: $control-color;
 
     &.active {
         border: $frame-border-active;

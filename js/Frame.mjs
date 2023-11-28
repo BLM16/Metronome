@@ -8,28 +8,45 @@ export class Frame {
     #time_signature_num;
     #time_signature_den;
     #duration_bars;
+    elem;
 
-    constructor(frame_number) {
-        this.frame_number = frame_number;
-
+    constructor() {
         this.#tempo = 100;
         this.#time_signature_num = 4;
         this.#time_signature_den = 4;
         this.#duration_bars = undefined;
 
         // Create a new frame in the DOM
-        const elem = document.createElement('metronome-frame');
-        elem.setAttribute('data-frame-number', frame_number);
-        elem.setAttribute('onclick', `frameClicked(${frame_number})`);
-        elem.setAttribute('tempo', this.#tempo || '');
-        elem.setAttribute('time_signature_num', this.#time_signature_num || '');
-        elem.setAttribute('time_signature_den', this.#time_signature_den || '');
-        elem.setAttribute('duration_bars', this.#duration_bars || '');
+        this.elem = document.createElement('metronome-frame');
+        this.elem.setAttribute('onclick', `frameClicked(this)`);
+        this.elem.setAttribute('tempo', this.#tempo || '');
+        this.elem.setAttribute('time_signature_num', this.#time_signature_num || '');
+        this.elem.setAttribute('time_signature_den', this.#time_signature_den || '');
+        this.elem.setAttribute('duration_bars', this.#duration_bars || '');
 
-        if (state.frame + 1 == frame_number)
-            elem.setAttribute('class', 'active');
+        if (state.frame == frames.length)
+            this.elem.setAttribute('class', 'active');
 
-        c_frames.appendChild(elem);
+        c_frames.appendChild(this.elem);
+    }
+
+    toObject() {
+        return {
+            ['tempo']: this.tempo,
+            ['time_signature_num']: this.time_signature_num,
+            ['time_signature_den']: this.time_signature_den,
+            ['duration_bars']: this.duration_bars
+        };
+    }
+
+    static fromObject(json) {
+        let f = new Frame();
+        f.tempo = json.tempo;
+        f.time_signature_num = json.time_signature_num;
+        f.time_signature_den = json.time_signature_den;
+        f.duration_bars = json.duration_bars;
+
+        return f;
     }
 
     get tempo() {
@@ -40,8 +57,7 @@ export class Frame {
         this.#tempo = val;
         pause();
 
-        const elem = c_frames.getElementsByTagName('metronome-frame')[this.frame_number - 1];
-        elem.setAttribute('tempo', this.#tempo);
+        this.elem.setAttribute('tempo', this.#tempo);
     }
 
     get time_signature_num() {
@@ -51,33 +67,51 @@ export class Frame {
     set time_signature_num(val) {
         this.#time_signature_num = val;
         pause();
-    }
 
+        this.elem.setAttribute('time_signature_num', this.#time_signature_num);
+    }
+    
     get time_signature_den() {
         return this.#time_signature_den;
     }
-
+    
     set time_signature_den(val) {
         this.#time_signature_den = val;
         pause();
-    }
 
+        this.elem.setAttribute('time_signature_den', this.#time_signature_den);
+    }
+    
     get duration_bars() {
         return this.#duration_bars;
     }
-
+    
     set duration_bars(val) {
         this.#duration_bars = val;
         pause();
+
+        this.elem.setAttribute('duration_bars', this.#duration_bars);
     }
 }
 
 function getFrameFor(elem) {
     const shadowRoot = elem.getRootNode();
     const metronome_frame = shadowRoot.host;
+    
+    let frame_number = getFrameNumber(metronome_frame);
+    
+    return frames[frame_number];
+}
 
-    const frame_number = metronome_frame.getAttribute('data-frame-number');
-    return frames[frame_number - 1];
+function getFrameNumber(elem) {
+    const elem_add_frame = document.querySelector('.add-frame-wrapper');
+    
+    let frame_number = 0;
+    while (elem.previousElementSibling !== elem_add_frame) {
+        frame_number++;
+        elem = elem.previousElementSibling;
+    }
+    return frame_number;
 }
 
 function isDisabled(elem) {
@@ -127,8 +161,10 @@ window.decTempo = function(elem) {
     frame.tempo--;
 }
 
-window.frameClicked = function(frame_num) {
-    state.frame = frame_num - 1;
+window.frameClicked = function(elem) {
+    const frame_num = getFrameNumber(elem);
+
+    state.frame = frame_num;
     state.bar = 0;
     state.beat = 0;
 

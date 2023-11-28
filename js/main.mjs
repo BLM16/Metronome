@@ -30,9 +30,15 @@ export let state = {
     beat: 0,
 };
 
-export let frames = [ new Frame(1) ];
+export let frames = [];
+export function setFrames(val) {
+    frames = val;
+}
 
-window.onload = () => setTicks(frames[state.frame].time_signature_num);
+window.onload = () => {
+    addFrame();
+    setTicks(frames[state.frame].time_signature_num);
+};
 
 const c_frames = document.getElementById('frames');
 
@@ -49,6 +55,13 @@ function fixFramesWidth() {
     }
 
     mframes.classList.remove('small-screen');
+}
+
+export function resetState() {
+    state.play = false;
+    state.bar = 0;
+    state.beat = 0;
+    state.frame = 0;
 }
 
 export function togglePlay() {
@@ -72,12 +85,7 @@ export function pause() {
     window.clearInterval(tick_interval_id);
     btn_play.innerText = 'START';
 
-    // Reset state
-    state.play = false;
-    state.bar = 0;
-    state.beat = 0;
-    state.frame = 0;
-
+    resetState();
     clearActiveTick();
     setActiveFrame(0);
 }
@@ -115,4 +123,12 @@ export function setTickInterval() {
     let timeout  = note_len * 1000;
 
     tick_interval_id = window.setInterval(doTick, timeout);
+}
+
+export function clearAllFrames() {
+    let mframes = c_frames.getElementsByTagName('metronome-frame');
+    let num_frames = mframes.length;
+    for (let i = 0; i < num_frames; i++) {
+        mframes.item(0).remove();
+    }
 }

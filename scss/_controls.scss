@@ -13,10 +13,25 @@
         max-width: 95vw;
         width: 31em;
         height: 3em;
+    }
 
-        &:hover {
-            background-color: $control-bg-active;
-            cursor: pointer;
+    .row {
+        display: flex;
+        flex-direction: row;
+        flex-flow: row;
+        flex-wrap: wrap;
+        gap: 1em;
+        max-width: 95vw;
+
+        .btn {
+            display: flex;
+            align-items: center;
+            gap: 0.4em;
+            fill: $control-color;
+
+            .icon {
+                height: 1.5em;
+            }
         }
     }
 
@@ -62,11 +77,6 @@
                 border-width: 0 3px 3px 0;
                 transform: rotate(45deg);
             }
-        }
-
-        &:hover {
-            background-color: $control-bg-active;
-            cursor: pointer;
         }
     }
 }

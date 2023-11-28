@@ -54,9 +54,18 @@
         align-items: center;
         gap: 1em;
 
-        hr {
-            width: 100%;
-            border: 1px dashed;
+        form {
+            display: flex;
+            flex-direction: row;
+            flex-flow: row;
+            flex-wrap: wrap;
+            gap: 1em;
+
+            input, select {
+                border-radius: 8px;
+                border: none;
+                padding: 5px;
+            }
         }
     }
 }

@@ -23,7 +23,7 @@ class FrameElement extends HTMLElement {
             const txt_tempo = document.createElement('input');
             txt_tempo.setAttribute('type', 'number');
             txt_tempo.setAttribute('name', 'tempo');
-            txt_tempo.setAttribute('class', 'txt-tempo');
+            txt_tempo.setAttribute('id', 'txt-tempo');
             txt_tempo.setAttribute('placeholder', '100');
             txt_tempo.setAttribute('value', this.getAttribute('tempo'));
             txt_tempo.setAttribute('onchange', 'setFrameValue(this, \'tempo\')');
@@ -44,6 +44,7 @@ class FrameElement extends HTMLElement {
             const time_signature_num = document.createElement('input');
             time_signature_num.setAttribute('type', 'number');
             time_signature_num.setAttribute('name', 'time-signature-num');
+            time_signature_num.setAttribute('id', 'txt-time-signature-num');
             time_signature_num.setAttribute('class', 'time-signature-input');
             time_signature_num.setAttribute('placeholder', '4');
             time_signature_num.setAttribute('value', this.getAttribute('time_signature_num'));
@@ -56,6 +57,7 @@ class FrameElement extends HTMLElement {
             const time_signature_den = document.createElement('input');
             time_signature_den.setAttribute('type', 'number');
             time_signature_den.setAttribute('name', 'time-signature-den');
+            time_signature_den.setAttribute('id', 'txt-time-signature-den');
             time_signature_den.setAttribute('class', 'time-signature-input');
             time_signature_den.setAttribute('placeholder', '4');
             time_signature_den.setAttribute('value', this.getAttribute('time_signature_den'));
@@ -71,6 +73,7 @@ class FrameElement extends HTMLElement {
             const duration_bars = document.createElement('input');
             duration_bars.setAttribute('type', 'number');
             duration_bars.setAttribute('name', 'duration-bars');
+            duration_bars.setAttribute('id', 'txt-duration-bars');
             duration_bars.setAttribute('class', 'duration-input');
             duration_bars.setAttribute('placeholder', 'bars');
             duration_bars.setAttribute('value', this.getAttribute('duration_bars'));
@@ -89,14 +92,23 @@ class FrameElement extends HTMLElement {
     }
 
     static get observedAttributes() {
-        return ['tempo'];
+        return ['tempo', 'time_signature_num', 'time_signatur_den', 'duration_bars'];
     }
 
     attributeChangedCallback(name, _, newVal) {
         if (!this.shadowRoot) return;
 
         if (name == 'tempo') {
-            this.shadowRoot.querySelector('.txt-tempo').value = newVal;
+            this.shadowRoot.getElementById('txt-tempo').value = newVal;
+        }
+        else if (name == 'time_signature_num') {
+            this.shadowRoot.getElementById('txt-time-signature-num').value = newVal;
+        }
+        else if (name == 'time_signature_den') {
+            this.shadowRoot.getElementById('txt-time-signature-den').value = newVal;
+        }
+        else if (name == 'duration_bars') {
+            this.shadowRoot.getElementById('txt-duration-bars').value = newVal;
         }
     }
 }

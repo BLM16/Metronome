@@ -33,8 +33,9 @@ body {
     color: $control-color;
     background-color: $control-bg;
     padding: 0.5em;
-}
 
-.hidden {
-    display: none;
+    &:hover {
+        background-color: $control-bg-active;
+        cursor: pointer;
+    }
 }
